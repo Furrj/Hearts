@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { Card as Card_Class } from "./utils/initCards";
-
 //UTILS
 import GameManager from "./utils/GameManager";
 
