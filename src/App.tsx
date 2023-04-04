@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { Card as Card_Class } from "./utils/initCards";
 
 //UTILS
 import GameManager from "./utils/GameManager";
@@ -6,16 +8,33 @@ import GameManager from "./utils/GameManager";
 const App: React.FC = () => {
   const gameManager: GameManager = new GameManager();
 
+  //STATE
+  const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
+    gameManager.getPlayer1Cards()
+  );
+
+  const [player2Hand, setPlayer2Hand] = useState<JSX.Element[]>(
+    gameManager.getPlayer2Cards()
+  );
+
+  const [player3Hand, setPlayer3Hand] = useState<JSX.Element[]>(
+    gameManager.getPlayer3Cards()
+  );
+
+  const [player4Hand, setPlayer4Hand] = useState<JSX.Element[]>(
+    gameManager.getPlayer4Cards()
+  );
+
   return (
     <div className="app">
       <p>Player 1</p>
-      <div className="pbox">{gameManager.getPlayer1Cards()}</div>
+      <div className="pbox">{player1Hand}</div>
       <p>Player 2</p>
-      <div className="pbox">{gameManager.getPlayer2Cards()}</div>
+      <div className="pbox">{player2Hand}</div>
       <p>Player 3</p>
-      <div className="pbox">{gameManager.getPlayer3Cards()}</div>
+      <div className="pbox">{player3Hand}</div>
       <p>Player 4</p>
-      <div className="pbox">{gameManager.getPlayer4Cards()}</div>
+      <div className="pbox">{player4Hand}</div>
     </div>
   );
 };
