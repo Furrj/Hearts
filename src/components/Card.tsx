@@ -7,7 +7,7 @@ import spades from "../assets/spades.svg";
 import clubs from "../assets/clubs.svg";
 
 //TS
-import GameManager from "../utils/GameManager";
+import GameManager, { GamePhases, PlayerTurns } from "../utils/GameManager";
 
 interface IProps {
   suit: string;
@@ -44,11 +44,20 @@ const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
       break;
   }
 
+  //FUNCTIONS
+  function selectCards(): void {
+    if (
+      gameManager.getGamePhase().playerTurn === PlayerTurns.Trading &&
+      gameManager.getGamePhase().gamePhase === GamePhases.Init &&
+      gameManager.getPlayer1SelectedCards().length < 3
+    ) {
+      setSelected(!selected);
+      gameManager.addPlayer1SelectedCard(id);
+    }
+  }
+
   return (
-    <div
-      className={`card ${colorClass}`}
-      onClick={() => setSelected(!selected)}
-    >
+    <div className={`card ${colorClass}`} onClick={selectCards}>
       {icon}
       <br />
       {value}
