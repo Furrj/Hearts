@@ -23,6 +23,15 @@ const App: React.FC = () => {
     gameManager.getPlayer4Cards()
   );
 
+  //FUNCTIONS
+  function dealCardsAgain() {
+    gameManager.dealCards();
+    setPlayer1Hand(gameManager.getPlayer1Cards());
+    setPlayer2Hand(gameManager.getPlayer2Cards());
+    setPlayer3Hand(gameManager.getPlayer3Cards());
+    setPlayer4Hand(gameManager.getPlayer4Cards());
+  }
+
   return (
     <div className="app">
       <p>Player 1</p>
