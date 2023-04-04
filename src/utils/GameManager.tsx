@@ -38,7 +38,9 @@ class GameManager {
     const arr: JSX.Element[] = [];
 
     for (let card of this.allHands[0]) {
-      arr.push(<Card value={card.value} suit={card.suit} id={card.id} />);
+      arr.push(
+        <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
+      );
     }
 
     return arr;
@@ -48,7 +50,9 @@ class GameManager {
     const arr: JSX.Element[] = [];
 
     for (let card of this.allHands[1]) {
-      arr.push(<Card value={card.value} suit={card.suit} id={card.id} />);
+      arr.push(
+        <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
+      );
     }
 
     return arr;
@@ -58,7 +62,9 @@ class GameManager {
     const arr: JSX.Element[] = [];
 
     for (let card of this.allHands[2]) {
-      arr.push(<Card value={card.value} suit={card.suit} id={card.id} />);
+      arr.push(
+        <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
+      );
     }
 
     return arr;
@@ -68,7 +74,9 @@ class GameManager {
     const arr: JSX.Element[] = [];
 
     for (let card of this.allHands[3]) {
-      arr.push(<Card value={card.value} suit={card.suit} id={card.id} />);
+      arr.push(
+        <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
+      );
     }
 
     return arr;
