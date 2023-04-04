@@ -3,4 +3,4 @@
 A version of the classic card game, Hearts
 Made using React with Typescript
 
-![plot] (./src/assets/hearts.svg)
+![Alt text] (/src/assets/hearts.svg)
