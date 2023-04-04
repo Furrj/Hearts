@@ -25,7 +25,6 @@ class GameManager {
     this.player4Hand = this.allHands[3];
     this.gamePhase = GamePhases.Init;
     this.playerTurn = PlayerTurns.Trading;
-    console.log("triggered");
   }
 
   dealCards(): Card_Class[][] {
@@ -65,7 +64,6 @@ class GameManager {
     this.allHands[0].forEach((card) => {
       if (card.id === id) this.player1SelectedCards.push(card);
     });
-    console.log(this.player1SelectedCards);
   }
 
   getPlayer2Cards(): JSX.Element[] {
