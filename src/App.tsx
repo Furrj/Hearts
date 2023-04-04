@@ -3,9 +3,9 @@ import React, { useState } from "react";
 //UTILS
 import GameManager, { GamePhases, PlayerTurns } from "./utils/GameManager";
 
-const App: React.FC = () => {
-  const gameManager: GameManager = new GameManager();
+const gameManager: GameManager = new GameManager();
 
+const App: React.FC = () => {
   //STATE
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
     gameManager.getPlayer1Cards()
@@ -24,19 +24,12 @@ const App: React.FC = () => {
   );
 
   //FUNCTIONS
-  function dealCardsAgain() {
-    gameManager.dealCards();
+  function updateCards() {
     setPlayer1Hand(gameManager.getPlayer1Cards());
     setPlayer2Hand(gameManager.getPlayer2Cards());
     setPlayer3Hand(gameManager.getPlayer3Cards());
     setPlayer4Hand(gameManager.getPlayer4Cards());
   }
-
-  function tradeCards() {
-    console.log("Select 3 cards to trade");
-  }
-
-  tradeCards();
 
   return (
     <div className="app">
