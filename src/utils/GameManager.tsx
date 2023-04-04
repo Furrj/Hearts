@@ -35,51 +35,35 @@ class GameManager {
   }
 
   getPlayer1Cards(): JSX.Element[] {
-    const arr: JSX.Element[] = [];
-
-    for (let card of this.allHands[0]) {
-      arr.push(
+    return this.allHands[0].map((card) => {
+      return (
         <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
       );
-    }
-
-    return arr;
+    });
   }
 
   getPlayer2Cards(): JSX.Element[] {
-    const arr: JSX.Element[] = [];
-
-    for (let card of this.allHands[1]) {
-      arr.push(
+    return this.allHands[1].map((card) => {
+      return (
         <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
       );
-    }
-
-    return arr;
+    });
   }
 
   getPlayer3Cards(): JSX.Element[] {
-    const arr: JSX.Element[] = [];
-
-    for (let card of this.allHands[2]) {
-      arr.push(
+    return this.allHands[2].map((card) => {
+      return (
         <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
       );
-    }
-
-    return arr;
+    });
   }
 
   getPlayer4Cards(): JSX.Element[] {
-    const arr: JSX.Element[] = [];
-
-    for (let card of this.allHands[3]) {
-      arr.push(
+    return this.allHands[3].map((card) => {
+      return (
         <Card value={card.value} suit={card.suit} id={card.id} key={card.id} />
       );
-    }
-
-    return arr;
+    });
   }
 }
 
