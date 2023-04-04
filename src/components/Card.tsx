@@ -7,10 +7,13 @@ import spades from "../assets/spades.svg";
 import clubs from "../assets/clubs.svg";
 
 //TS
+import GameManager from "../utils/GameManager";
+
 interface IProps {
   suit: string;
   value: string | number;
   id: number;
+  gameManager: GameManager;
 }
 
 enum ColorClass {
@@ -18,7 +21,7 @@ enum ColorClass {
   selected = "card-selected",
 }
 
-const Card: React.FC<IProps> = ({ suit, value, id }) => {
+const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
   const [selected, setSelected] = useState<Boolean>(false);
 
   let icon: any;
