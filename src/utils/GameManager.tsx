@@ -79,6 +79,7 @@ class GameManager {
     this.playerTurn = playerTurn;
   }
 }
+
 //TS
 export enum GamePhases {
   Init = "init",

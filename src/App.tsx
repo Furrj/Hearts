@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
 //UTILS
-import GameManager from "./utils/GameManager";
-
-//TS
-import { GamePhases, PlayerTurns } from "./utils/GameManager";
+import GameManager, { GamePhases, PlayerTurns } from "./utils/GameManager";
 
 const App: React.FC = () => {
   const gameManager: GameManager = new GameManager();
@@ -34,6 +31,12 @@ const App: React.FC = () => {
     setPlayer3Hand(gameManager.getPlayer3Cards());
     setPlayer4Hand(gameManager.getPlayer4Cards());
   }
+
+  function tradeCards() {
+    console.log("Select 3 cards to trade");
+  }
+
+  tradeCards();
 
   return (
     <div className="app">

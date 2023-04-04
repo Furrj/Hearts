@@ -42,8 +42,12 @@
   cursor: pointer;
 }
 
+.card-selected {
+  background: rgb(0, 216, 230);
+}
+
 .card:hover {
-  background: lightblue;
+  background: rgb(173, 216, 230);
 }
 
 img {

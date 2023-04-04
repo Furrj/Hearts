@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 //ICONS
 import hearts from "../assets/hearts.svg";
@@ -13,8 +13,18 @@ interface IProps {
   id: number;
 }
 
+enum ColorClass {
+  normal = "",
+  selected = "card-selected",
+}
+
 const Card: React.FC<IProps> = ({ suit, value, id }) => {
+  const [selected, setSelected] = useState<Boolean>(false);
+
   let icon: any;
+  let colorClass: ColorClass = selected
+    ? ColorClass.selected
+    : ColorClass.normal;
 
   switch (suit) {
     case "Hearts":
@@ -32,7 +42,10 @@ const Card: React.FC<IProps> = ({ suit, value, id }) => {
   }
 
   return (
-    <div className="card">
+    <div
+      className={`card ${colorClass}`}
+      onClick={() => setSelected(!selected)}
+    >
       {icon}
       <br />
       {value}
