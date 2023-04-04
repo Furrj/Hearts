@@ -10,6 +10,8 @@ class GameManager {
   player2Hand: Card_Class[];
   player3Hand: Card_Class[];
   player4Hand: Card_Class[];
+  gamePhase: GamePhases;
+  playerTurn: PlayerTurns;
 
   constructor() {
     this.allHands = deal(initCards());
@@ -17,6 +19,8 @@ class GameManager {
     this.player2Hand = this.allHands[1];
     this.player3Hand = this.allHands[2];
     this.player4Hand = this.allHands[3];
+    this.gamePhase = GamePhases.Init;
+    this.playerTurn = PlayerTurns.Trading;
   }
 
   dealCards(): Card_Class[][] {
@@ -65,6 +69,35 @@ class GameManager {
       );
     });
   }
+
+  getGamePhase(): gamePhaseObject {
+    return { gamePhase: this.gamePhase, playerTurn: this.playerTurn };
+  }
+
+  setGamePhase(gamePhase: GamePhases, playerTurn: PlayerTurns): void {
+    this.gamePhase = gamePhase;
+    this.playerTurn = playerTurn;
+  }
 }
+//TS
+export enum GamePhases {
+  Init = "init",
+  PlayerTurns = "playerTurns",
+  End = "end",
+}
+
+export enum PlayerTurns {
+  Trading = "trading",
+  Player1 = "player1",
+  Player2 = "player2",
+  Player3 = "player3",
+  Player4 = "player4",
+  End = "end",
+}
+
+type gamePhaseObject = {
+  gamePhase: string;
+  playerTurn: string;
+};
 
 export default GameManager;

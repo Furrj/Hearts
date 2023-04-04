@@ -3,6 +3,9 @@ import React, { useState } from "react";
 //UTILS
 import GameManager from "./utils/GameManager";
 
+//TS
+import { GamePhases, PlayerTurns } from "./utils/GameManager";
+
 const App: React.FC = () => {
   const gameManager: GameManager = new GameManager();
 
