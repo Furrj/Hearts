@@ -45,19 +45,23 @@ const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
   }
 
   //FUNCTIONS
-  function selectCards(): void {
+  function selectCard(): void {
     if (
       gameManager.getGamePhase().playerTurn === PlayerTurns.Trading &&
-      gameManager.getGamePhase().gamePhase === GamePhases.Init &&
-      gameManager.getPlayer1SelectedCards().length < 3
+      gameManager.getGamePhase().gamePhase === GamePhases.Init
     ) {
-      setSelected(!selected);
-      gameManager.addPlayer1SelectedCard(id);
+      if (gameManager.getPlayer1SelectedCards().length < 3 && !selected) {
+        setSelected((selected) => !selected);
+        gameManager.addPlayer1SelectedCard(id);
+      } else if (selected) {
+        setSelected((selected) => !selected);
+        gameManager.removePlayer1SelectedCard(id);
+      }
     }
   }
 
   return (
-    <div className={`card ${colorClass}`} onClick={selectCards}>
+    <div className={`card ${colorClass}`} onClick={selectCard}>
       {icon}
       <br />
       {value}

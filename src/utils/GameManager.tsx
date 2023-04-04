@@ -64,6 +64,14 @@ class GameManager {
     this.allHands[0].forEach((card) => {
       if (card.id === id) this.player1SelectedCards.push(card);
     });
+    console.log(this.player1SelectedCards);
+  }
+
+  removePlayer1SelectedCard(id: number): void {
+    this.player1SelectedCards = this.player1SelectedCards.filter(
+      (card) => card.id !== id
+    );
+    console.log(this.player1SelectedCards);
   }
 
   getPlayer2Cards(): JSX.Element[] {
@@ -135,8 +143,8 @@ export enum PlayerTurns {
 }
 
 type gamePhaseObject = {
-  gamePhase: string;
-  playerTurn: string;
+  gamePhase: GamePhases;
+  playerTurn: PlayerTurns;
 };
 
 export default GameManager;
