@@ -33,14 +33,26 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <p>Player 1</p>
-      <div className="pbox">{player1Hand}</div>
-      <p>Player 2</p>
-      <div className="pbox">{player2Hand}</div>
-      <p>Player 3</p>
-      <div className="pbox">{player3Hand}</div>
-      <p>Player 4</p>
-      <div className="pbox">{player4Hand}</div>
+      <div id="pbox4">
+        <p>Player 4</p>
+        <div className="pbox">{player4Hand}</div>
+      </div>
+      {/* <div id="pbox2">
+        <p>Player 2</p>
+        <div className="pbox" id="pbox2">
+          {player2Hand}
+        </div>
+      </div>
+      <div id="pbox3">
+        <p>Player 3</p>
+        <div className="pbox" id="pbox3">
+          {player3Hand}
+        </div>
+      </div> */}
+      <div id="pbox1">
+        <p>Player 1</p>
+        <div className="pbox">{player1Hand}</div>
+      </div>
     </div>
   );
 };
