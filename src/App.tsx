@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+//COMPONENTS
+import CenterBox from "./components/CenterBox";
+
 //UTILS
 import GameManager, { GamePhases, PlayerTurns } from "./utils/GameManager";
 
@@ -46,11 +49,10 @@ const App: React.FC = () => {
         <p>Player 2</p>
       </div>
       <div id="pbox1">
-        <button>Send</button>
         <p>Player 1</p>
         <div className="pboxX">{player1Hand}</div>
       </div>
-      <div className="centerBox">Hello</div>
+      <CenterBox />
     </div>
   );
 };
