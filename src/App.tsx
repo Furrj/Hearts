@@ -52,7 +52,7 @@ const App: React.FC = () => {
         <p>Player 1</p>
         <div className="pboxX">{player1Hand}</div>
       </div>
-      <CenterBox />
+      <CenterBox gameManager={gameManager} updateCards={updateCards} />
     </div>
   );
 };

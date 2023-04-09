@@ -56,6 +56,12 @@ class GameManager {
     });
   }
 
+  removePlayer1Card(cardToRemove: Card_Class) {
+    this.allHands[0] = this.allHands[0].filter(
+      (card) => cardToRemove.id !== card.id
+    );
+  }
+
   getPlayer1SelectedCards(): Card_Class[] {
     return this.player1SelectedCards;
   }
@@ -74,6 +80,14 @@ class GameManager {
     console.log(this.player1SelectedCards);
   }
 
+  tradePlayer1Cards(): void {
+    for (let card of this.player1SelectedCards) {
+      this.removePlayer1Card(card);
+      this.addPlayer2Card(card);
+      console.log(this.allHands[0]);
+    }
+  }
+
   getPlayer2Cards(): JSX.Element[] {
     return this.allHands[1].map((card) => {
       return (
@@ -86,6 +100,10 @@ class GameManager {
         />
       );
     });
+  }
+
+  addPlayer2Card(cardToAdd: Card_Class): void {
+    this.allHands[1].push(cardToAdd);
   }
 
   getPlayer3Cards(): JSX.Element[] {
