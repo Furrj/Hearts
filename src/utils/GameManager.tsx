@@ -1,163 +1,34 @@
 import initCards, { Card as Card_Class } from "./initCards";
 import { deal } from "./handleCards";
 
-//COMPS
-import Card from "../components/Card";
-
 class GameManager {
   instance: GameManager;
+  initHands: Card_Class[][];
   allHands: Card_Class[][];
-  player1Hand: Card_Class[];
-  player1SelectedCards: Card_Class[];
-  player2Hand: Card_Class[];
-  player3Hand: Card_Class[];
-  player4Hand: Card_Class[];
+  selectedCards: Card_Class[][];
   gamePhase: GamePhases;
   playerTurn: PlayerTurns;
 
   constructor() {
     this.instance = this;
-    this.allHands = deal(initCards());
-    this.player1Hand = this.allHands[0];
-    this.player1SelectedCards = [];
-    this.player2Hand = this.allHands[1];
-    this.player3Hand = this.allHands[2];
-    this.player4Hand = this.allHands[3];
+    this.initHands = deal(initCards());
+    this.allHands = [...this.initHands];
+    this.selectedCards = [];
     this.gamePhase = GamePhases.Init;
     this.playerTurn = PlayerTurns.Trading;
   }
 
-  dealCards(): Card_Class[][] {
-    this.allHands = deal(initCards());
-
-    this.player1Hand = this.allHands[0];
-    this.player2Hand = this.allHands[1];
-    this.player3Hand = this.allHands[2];
-    this.player4Hand = this.allHands[3];
-
-    return this.allHands;
+  dealCards(): void {
+    this.initHands = deal(initCards());
+    this.allHands = [...this.initHands];
   }
 
   getAllHands(): Card_Class[][] {
     return this.allHands;
   }
 
-  getPlayer1Cards(): JSX.Element[] {
-    return this.allHands[0].map((card) => {
-      return (
-        <Card
-          value={card.value}
-          suit={card.suit}
-          id={card.id}
-          key={card.id}
-          gameManager={this.instance}
-        />
-      );
-    });
-  }
-
-  removePlayer1Card(cardToRemove: Card_Class) {
-    this.allHands[0] = this.allHands[0].filter(
-      (card) => cardToRemove.id !== card.id
-    );
-  }
-
-  getPlayer1SelectedCards(): Card_Class[] {
-    return this.player1SelectedCards;
-  }
-
-  addPlayer1SelectedCard(id: number): void {
-    this.allHands[0].forEach((card) => {
-      if (card.id === id) this.player1SelectedCards.push(card);
-    });
-    console.log(this.player1SelectedCards);
-  }
-
-  removePlayer1SelectedCard(id: number): void {
-    this.player1SelectedCards = this.player1SelectedCards.filter(
-      (card) => card.id !== id
-    );
-    console.log(this.player1SelectedCards);
-  }
-
-  tradePlayer1Cards(): void {
-    for (let card of this.player1SelectedCards) {
-      this.removePlayer1Card(card);
-      this.addPlayer2Card(card);
-      console.log(this.allHands[0]);
-    }
-  }
-
-  getPlayer2Cards(): JSX.Element[] {
-    return this.allHands[1].map((card) => {
-      return (
-        <Card
-          value={card.value}
-          suit={card.suit}
-          id={card.id}
-          key={card.id}
-          gameManager={this.instance}
-        />
-      );
-    });
-  }
-
-  addPlayer2Card(cardToAdd: Card_Class): void {
-    this.allHands[1].push(cardToAdd);
-  }
-
-  removePlayer2Card(cardToRemove: Card_Class) {
-    this.allHands[1] = this.allHands[1].filter(
-      (card) => cardToRemove.id !== card.id
-    );
-  }
-
-  getPlayer3Cards(): JSX.Element[] {
-    return this.allHands[2].map((card) => {
-      return (
-        <Card
-          value={card.value}
-          suit={card.suit}
-          id={card.id}
-          key={card.id}
-          gameManager={this.instance}
-        />
-      );
-    });
-  }
-
-  addPlayer3Card(cardToAdd: Card_Class): void {
-    this.allHands[2].push(cardToAdd);
-  }
-
-  removePlayer3Card(cardToRemove: Card_Class) {
-    this.allHands[2] = this.allHands[2].filter(
-      (card) => cardToRemove.id !== card.id
-    );
-  }
-
-  getPlayer4Cards(): JSX.Element[] {
-    return this.allHands[3].map((card) => {
-      return (
-        <Card
-          value={card.value}
-          suit={card.suit}
-          id={card.id}
-          key={card.id}
-          gameManager={this.instance}
-        />
-      );
-    });
-  }
-
-  addPlayer4Card(cardToAdd: Card_Class): void {
-    this.allHands[3].push(cardToAdd);
-  }
-
-  removePlayer4Card(cardToRemove: Card_Class) {
-    this.allHands[3] = this.allHands[3].filter(
-      (card) => cardToRemove.id !== card.id
-    );
+  getPlayerCards(player: number): Card_Class[] {
+    return this.allHands[--player];
   }
 
   getGamePhase(): gamePhaseObject {

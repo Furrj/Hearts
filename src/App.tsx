@@ -2,36 +2,52 @@ import React, { useState } from "react";
 
 //COMPONENTS
 import CenterBox from "./components/CenterBox";
+import Card from "./components/Card";
 
 //UTILS
 import GameManager, { GamePhases, PlayerTurns } from "./utils/GameManager";
+import { Card as Card_Class } from "./utils/initCards";
 
 const gameManager: GameManager = new GameManager();
 
 const App: React.FC = () => {
   //STATE
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
-    gameManager.getPlayer1Cards()
+    mapToCardComponent(gameManager.getPlayerCards(1))
   );
 
   const [player2Hand, setPlayer2Hand] = useState<JSX.Element[]>(
-    gameManager.getPlayer2Cards()
+    mapToCardComponent(gameManager.getPlayerCards(2))
   );
 
   const [player3Hand, setPlayer3Hand] = useState<JSX.Element[]>(
-    gameManager.getPlayer3Cards()
+    mapToCardComponent(gameManager.getPlayerCards(3))
   );
 
   const [player4Hand, setPlayer4Hand] = useState<JSX.Element[]>(
-    gameManager.getPlayer4Cards()
+    mapToCardComponent(gameManager.getPlayerCards(4))
   );
 
   //FUNCTIONS
+  function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
+    return cards.map((card) => {
+      return (
+        <Card
+          value={card.value}
+          suit={card.suit}
+          id={card.id}
+          key={card.id}
+          gameManager={gameManager}
+        />
+      );
+    });
+  }
+
   function updateCards() {
-    setPlayer1Hand(gameManager.getPlayer1Cards());
-    setPlayer2Hand(gameManager.getPlayer2Cards());
-    setPlayer3Hand(gameManager.getPlayer3Cards());
-    setPlayer4Hand(gameManager.getPlayer4Cards());
+    setPlayer1Hand(mapToCardComponent(gameManager.getPlayerCards(1)));
+    setPlayer2Hand(mapToCardComponent(gameManager.getPlayerCards(2)));
+    setPlayer3Hand(mapToCardComponent(gameManager.getPlayerCards(3)));
+    setPlayer4Hand(mapToCardComponent(gameManager.getPlayerCards(4)));
   }
 
   return (
