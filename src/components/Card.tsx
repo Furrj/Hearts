@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Card as Card_Class } from "../utils/initCards";
+
 //ICONS
 import hearts from "../assets/hearts.svg";
 import diamonds from "../assets/diamonds.svg";
@@ -50,13 +52,7 @@ const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
       gameManager.getGamePhase().playerTurn === PlayerTurns.Trading &&
       gameManager.getGamePhase().gamePhase === GamePhases.Init
     ) {
-      if (gameManager.getPlayer1SelectedCards().length < 3 && !selected) {
-        setSelected((selected) => !selected);
-        gameManager.addPlayer1SelectedCard(id);
-      } else if (selected) {
-        setSelected((selected) => !selected);
-        gameManager.removePlayer1SelectedCard(id);
-      }
+      console.log(true);
     }
   }
 
