@@ -52,10 +52,10 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager }) => {
     ) {
       if (gameManager.getSelectedCards(1).length < 3 && !selected) {
         setSelected((selected) => true);
-        gameManager.addSelectedCards(1, cardInfo);
+        gameManager.addSelectedCard(1, cardInfo);
       } else if (selected) {
         setSelected(false);
-        gameManager.removeSelectedCards(1, cardInfo.id);
+        gameManager.removeSelectedCard(1, cardInfo.id);
       }
     }
     console.log(gameManager.getSelectedCards(1));

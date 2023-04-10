@@ -17,7 +17,11 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   }
 
   function tradeCards(): void {
-    console.log("In progress");
+    for (let card of gameManager.getSelectedCards(1)) {
+      gameManager.removePlayerCard(1, card.id);
+      gameManager.addPlayerCard(2, card);
+    }
+    updateCards();
   }
 
   return (

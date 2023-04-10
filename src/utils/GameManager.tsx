@@ -31,15 +31,25 @@ class GameManager {
     return this.allHands[player - 1];
   }
 
+  addPlayerCard(player: number, card: Card_Class): void {
+    this.allHands[player - 1].push(card);
+  }
+
+  removePlayerCard(player: number, cardId: number): void {
+    this.allHands[player - 1] = this.allHands[player - 1].filter(
+      (card) => card.id !== cardId
+    );
+  }
+
   getSelectedCards(player: number): Card_Class[] {
     return this.selectedCards[player - 1];
   }
 
-  addSelectedCards(player: number, card: Card_Class): void {
+  addSelectedCard(player: number, card: Card_Class): void {
     this.selectedCards[player - 1].push(card);
   }
 
-  removeSelectedCards(player: number, cardId: number) {
+  removeSelectedCard(player: number, cardId: number) {
     this.selectedCards[player - 1] = this.selectedCards[player - 1].filter(
       (card) => card.id !== cardId
     );
