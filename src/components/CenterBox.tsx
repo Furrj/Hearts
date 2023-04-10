@@ -1,7 +1,7 @@
 import React from "react";
 
 //UTILS
-import GameManager, { GamePhases, PlayerTurns } from "../utils/GameManager";
+import GameManager, { GamePhases } from "../utils/GameManager";
 
 //TS
 interface IProps {
@@ -12,15 +12,19 @@ interface IProps {
 const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   let message: string = "";
 
-  switch (gameManager.getGamePhase().playerTurn) {
-    case PlayerTurns.Trading:
+  switch (gameManager.getGamePhase()) {
+    case GamePhases.Trading:
       message = "Please select 3 cards to pass";
+      break;
+    case GamePhases.Player1:
+      message = "Player 1 Turn";
   }
 
   //FUNCTIONS
   function tradeCards(): void {
     gameManager.tradeCards();
     updateCards();
+    gameManager.setGamePhase(GamePhases.Player1);
   }
 
   return (

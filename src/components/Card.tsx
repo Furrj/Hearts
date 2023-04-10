@@ -10,7 +10,7 @@ import spades from "../assets/spades.svg";
 import clubs from "../assets/clubs.svg";
 
 //TS
-import GameManager, { GamePhases, PlayerTurns } from "../utils/GameManager";
+import GameManager, { GamePhases } from "../utils/GameManager";
 
 interface IProps {
   cardInfo: Card_Class;
@@ -47,10 +47,7 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager }) => {
 
   //FUNCTIONS
   function selectCard(): void {
-    if (
-      gameManager.getGamePhase().playerTurn === PlayerTurns.Trading &&
-      gameManager.getGamePhase().gamePhase === GamePhases.Init
-    ) {
+    if (gameManager.getGamePhase() === GamePhases.Trading) {
       if (gameManager.getSelectedCards(1).length < 3 && !selected) {
         setSelected((selected) => true);
         gameManager.addSelectedCard(1, cardInfo);

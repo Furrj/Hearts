@@ -5,7 +5,7 @@ import CenterBox from "./components/CenterBox";
 import Card from "./components/Card";
 
 //UTILS
-import GameManager, { GamePhases, PlayerTurns } from "./utils/GameManager";
+import GameManager, { GamePhases } from "./utils/GameManager";
 import { Card as Card_Class } from "./utils/initCards";
 
 const gameManager: GameManager = new GameManager();
