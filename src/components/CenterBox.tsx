@@ -28,11 +28,18 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
       gameManager.tradeCards();
       updateCards();
       gameManager.findStartingPlayer();
+      gameManager.resetSelectedCards();
       setCardInCenter(true);
     } else {
-      gameManager.handleCPU();
-      content = createCardComponent(gameManager.getLastPlayedCard());
-      updateCards();
+      if (gameManager.getGamePhase() !== GamePhases.Player1) {
+        gameManager.handleTurns();
+        content = createCardComponent(gameManager.getLastPlayedCard());
+        updateCards();
+      } else if (gameManager.getGamePhase() === GamePhases.Player1) {
+        gameManager.handleTurns();
+        content = createCardComponent(gameManager.getLastPlayedCard());
+        updateCards();
+      }
     }
   }
 
