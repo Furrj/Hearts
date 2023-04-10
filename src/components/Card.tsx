@@ -49,7 +49,7 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager }) => {
   function selectCard(): void {
     if (gameManager.getGamePhase() === GamePhases.Trading) {
       if (gameManager.getSelectedCards(1).length < 3 && !selected) {
-        setSelected((selected) => true);
+        setSelected(true);
         gameManager.addSelectedCard(1, cardInfo);
       } else if (selected) {
         setSelected(false);

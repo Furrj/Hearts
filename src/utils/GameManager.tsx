@@ -14,6 +14,7 @@ class GameManager {
     this.allHands = [...this.initHands];
     this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Trading;
+    console.log(this.allHands);
   }
 
   dealCards(): void {
@@ -75,6 +76,30 @@ class GameManager {
         this.selectedCards[i].push(this.allHands[i][j]);
       }
     }
+  }
+
+  findStartingPlayer(): void {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 13; j++) {
+        if (this.allHands[i][j].id === 28) {
+          switch (i) {
+            case 0:
+              this.setGamePhase(GamePhases.Player1);
+              break;
+            case 1:
+              this.setGamePhase(GamePhases.Player2);
+              break;
+            case 2:
+              this.setGamePhase(GamePhases.Player3);
+              break;
+            case 3:
+              this.setGamePhase(GamePhases.Player4);
+              break;
+          }
+        }
+      }
+    }
+    console.log(this.gamePhase);
   }
 
   getGamePhase(): GamePhases {
