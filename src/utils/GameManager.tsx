@@ -13,7 +13,7 @@ class GameManager {
     this.instance = this;
     this.initHands = deal(initCards());
     this.allHands = [...this.initHands];
-    this.selectedCards = [];
+    this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Init;
     this.playerTurn = PlayerTurns.Trading;
   }
@@ -28,7 +28,21 @@ class GameManager {
   }
 
   getPlayerCards(player: number): Card_Class[] {
-    return this.allHands[--player];
+    return this.allHands[player - 1];
+  }
+
+  getSelectedCards(player: number): Card_Class[] {
+    return this.selectedCards[player - 1];
+  }
+
+  addSelectedCards(player: number, card: Card_Class): void {
+    this.selectedCards[player - 1].push(card);
+  }
+
+  removeSelectedCards(player: number, cardId: number) {
+    this.selectedCards[player - 1] = this.selectedCards[player - 1].filter(
+      (card) => card.id !== cardId
+    );
   }
 
   getGamePhase(): gamePhaseObject {

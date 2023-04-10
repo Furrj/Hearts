@@ -12,9 +12,7 @@ import clubs from "../assets/clubs.svg";
 import GameManager, { GamePhases, PlayerTurns } from "../utils/GameManager";
 
 interface IProps {
-  suit: string;
-  value: string | number;
-  id: number;
+  cardInfo: Card_Class;
   gameManager: GameManager;
 }
 
@@ -23,7 +21,7 @@ enum ColorClass {
   selected = "card-selected",
 }
 
-const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
+const Card: React.FC<IProps> = ({ cardInfo, gameManager }) => {
   const [selected, setSelected] = useState<Boolean>(false);
 
   let icon: any;
@@ -31,7 +29,7 @@ const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
     ? ColorClass.selected
     : ColorClass.normal;
 
-  switch (suit) {
+  switch (cardInfo.suit) {
     case "Hearts":
       icon = <img src={hearts} />;
       break;
@@ -52,15 +50,22 @@ const Card: React.FC<IProps> = ({ suit, value, id, gameManager }) => {
       gameManager.getGamePhase().playerTurn === PlayerTurns.Trading &&
       gameManager.getGamePhase().gamePhase === GamePhases.Init
     ) {
-      console.log(true);
+      if (gameManager.getSelectedCards(1).length < 3 && !selected) {
+        setSelected((selected) => true);
+        gameManager.addSelectedCards(1, cardInfo);
+      } else if (selected) {
+        setSelected(false);
+        gameManager.removeSelectedCards(1, cardInfo.id);
+      }
     }
+    console.log(gameManager.getSelectedCards(1));
   }
 
   return (
     <div className={`card ${colorClass}`} onClick={selectCard}>
       {icon}
       <br />
-      {value}
+      {cardInfo.value}
       <br />
       {icon}
     </div>

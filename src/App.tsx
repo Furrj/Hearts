@@ -31,15 +31,7 @@ const App: React.FC = () => {
   //FUNCTIONS
   function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
     return cards.map((card) => {
-      return (
-        <Card
-          value={card.value}
-          suit={card.suit}
-          id={card.id}
-          key={card.id}
-          gameManager={gameManager}
-        />
-      );
+      return <Card cardInfo={card} gameManager={gameManager} key={card.id} />;
     });
   }
 
