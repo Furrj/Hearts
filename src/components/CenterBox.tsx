@@ -1,5 +1,6 @@
 import React from "react";
 
+//UTILS
 import GameManager, { GamePhases, PlayerTurns } from "../utils/GameManager";
 
 //TS
@@ -16,11 +17,9 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
       message = "Please select 3 cards to pass";
   }
 
+  //FUNCTIONS
   function tradeCards(): void {
-    for (let card of gameManager.getSelectedCards(1)) {
-      gameManager.removePlayerCard(1, card.id);
-      gameManager.addPlayerCard(2, card);
-    }
+    gameManager.tradeCards();
     updateCards();
   }
 

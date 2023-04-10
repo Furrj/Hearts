@@ -49,10 +49,34 @@ class GameManager {
     this.selectedCards[player - 1].push(card);
   }
 
-  removeSelectedCard(player: number, cardId: number) {
+  removeSelectedCard(player: number, cardId: number): void {
     this.selectedCards[player - 1] = this.selectedCards[player - 1].filter(
       (card) => card.id !== cardId
     );
+  }
+
+  tradeCards(): void {
+    this.generateSelectedCards();
+
+    for (let i = 0; i <= 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (i < 3) {
+          this.addPlayerCard(i + 2, this.selectedCards[i][j]);
+          this.removePlayerCard(i + 1, this.selectedCards[i][j].id);
+        } else {
+          this.addPlayerCard(1, this.selectedCards[i][j]);
+          this.removePlayerCard(4, this.selectedCards[i][j].id);
+        }
+      }
+    }
+  }
+
+  generateSelectedCards(): void {
+    for (let i = 1; i <= 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        this.selectedCards[i].push(this.allHands[i][j]);
+      }
+    }
   }
 
   getGamePhase(): gamePhaseObject {
