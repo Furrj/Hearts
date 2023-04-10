@@ -106,6 +106,12 @@ class GameManager {
     this.allHands[1].push(cardToAdd);
   }
 
+  removePlayer2Card(cardToRemove: Card_Class) {
+    this.allHands[1] = this.allHands[1].filter(
+      (card) => cardToRemove.id !== card.id
+    );
+  }
+
   getPlayer3Cards(): JSX.Element[] {
     return this.allHands[2].map((card) => {
       return (
@@ -120,6 +126,16 @@ class GameManager {
     });
   }
 
+  addPlayer3Card(cardToAdd: Card_Class): void {
+    this.allHands[2].push(cardToAdd);
+  }
+
+  removePlayer3Card(cardToRemove: Card_Class) {
+    this.allHands[2] = this.allHands[2].filter(
+      (card) => cardToRemove.id !== card.id
+    );
+  }
+
   getPlayer4Cards(): JSX.Element[] {
     return this.allHands[3].map((card) => {
       return (
@@ -132,6 +148,16 @@ class GameManager {
         />
       );
     });
+  }
+
+  addPlayer4Card(cardToAdd: Card_Class): void {
+    this.allHands[3].push(cardToAdd);
+  }
+
+  removePlayer4Card(cardToRemove: Card_Class) {
+    this.allHands[3] = this.allHands[3].filter(
+      (card) => cardToRemove.id !== card.id
+    );
   }
 
   getGamePhase(): gamePhaseObject {
