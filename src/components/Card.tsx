@@ -55,6 +55,14 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager }) => {
         setSelected(false);
         gameManager.removeSelectedCard(1, cardInfo.id);
       }
+    } else if (gameManager.getGamePhase() === GamePhases.Player1) {
+      if (gameManager.getSelectedCards(1).length === 0 && !selected) {
+        setSelected(true);
+        gameManager.addSelectedCard(1, cardInfo);
+      } else if (selected) {
+        setSelected(false);
+        gameManager.removeSelectedCard(1, cardInfo.id);
+      }
     }
     console.log(gameManager.getSelectedCards(1));
   }

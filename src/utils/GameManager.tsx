@@ -55,6 +55,10 @@ class GameManager {
     );
   }
 
+  resetSelectedCards(): void {
+    this.selectedCards = [[], [], [], []];
+  }
+
   setLastPlayedCard(player: number, card: Card_Class): void {
     this.removePlayerCard(player, card.id);
     this.lastPlayedCard = card;
@@ -64,10 +68,12 @@ class GameManager {
     return this.lastPlayedCard;
   }
 
-  handleCPU(): void {
+  handleTurns(): void {
+    console.log(this.gamePhase);
     switch (this.gamePhase) {
       case GamePhases.Player1:
-        console.log("Implement player1 func");
+        this.setLastPlayedCard(1, this.getSelectedCards(1)[0]);
+        this.resetSelectedCards();
         break;
       case GamePhases.Player2:
         this.setLastPlayedCard(2, this.allHands[1][0]);
@@ -79,7 +85,6 @@ class GameManager {
         this.setLastPlayedCard(4, this.allHands[3][0]);
         break;
     }
-    console.log(this.gamePhase);
     this.nextPlayerTurn();
   }
 
