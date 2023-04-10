@@ -102,6 +102,19 @@ class GameManager {
     console.log(this.gamePhase);
   }
 
+  nextPlayerTurn(): void {
+    switch (this.gamePhase) {
+      case GamePhases.Player1:
+        this.setGamePhase(GamePhases.Player2);
+      case GamePhases.Player2:
+        this.setGamePhase(GamePhases.Player3);
+      case GamePhases.Player3:
+        this.setGamePhase(GamePhases.Player4);
+      case GamePhases.Player4:
+        this.setGamePhase(GamePhases.Player1);
+    }
+  }
+
   getGamePhase(): GamePhases {
     return this.gamePhase;
   }
