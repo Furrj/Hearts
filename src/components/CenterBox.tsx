@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 //UTILS
 import GameManager, { GamePhases } from "../utils/GameManager";
+import { Card as Card_Class } from "../utils/initCards";
+
+//COMPONENTS
+import Card from "./Card";
 
 //TS
 interface IProps {
@@ -10,26 +14,35 @@ interface IProps {
 }
 
 const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
-  let message: string = "";
+  //STATE
+  const [cardInCenter, setCardInCenter] = useState<boolean>(false);
 
-  switch (gameManager.getGamePhase()) {
-    case GamePhases.Trading:
-      message = "Please select 3 cards to pass";
-      break;
-    case GamePhases.Player1:
-      message = "Player 1 Turn";
-  }
+  //CONTENT
+  let content: JSX.Element = createCardComponent(
+    gameManager.getLastPlayedCard()
+  );
 
   //FUNCTIONS
   function tradeCards(): void {
-    gameManager.tradeCards();
-    updateCards();
-    gameManager.setGamePhase(GamePhases.Player1);
+    if (!cardInCenter) {
+      gameManager.tradeCards();
+      updateCards();
+      gameManager.findStartingPlayer();
+      setCardInCenter(true);
+    } else {
+      gameManager.handleCPU();
+      content = createCardComponent(gameManager.getLastPlayedCard());
+      updateCards();
+    }
+  }
+
+  function createCardComponent(cardInfo: Card_Class): JSX.Element {
+    return <Card cardInfo={cardInfo} gameManager={gameManager} />;
   }
 
   return (
     <div className="centerBox">
-      <p>{message}</p>
+      {cardInCenter ? content : "Please Select 3 Cards To Trade"}
       <button onClick={tradeCards}>Send</button>
     </div>
   );

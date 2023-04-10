@@ -7,6 +7,7 @@ class GameManager {
   allHands: Card_Class[][];
   selectedCards: Card_Class[][];
   gamePhase: GamePhases;
+  lastPlayedCard: Card_Class;
 
   constructor() {
     this.instance = this;
@@ -14,7 +15,7 @@ class GameManager {
     this.allHands = [...this.initHands];
     this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Trading;
-    console.log(this.allHands);
+    this.lastPlayedCard = new Card_Class(2, "Clubs", 28);
   }
 
   dealCards(): void {
@@ -52,6 +53,34 @@ class GameManager {
     this.selectedCards[player - 1] = this.selectedCards[player - 1].filter(
       (card) => card.id !== cardId
     );
+  }
+
+  setLastPlayedCard(player: number, card: Card_Class): void {
+    this.removePlayerCard(player, card.id);
+    this.lastPlayedCard = card;
+  }
+
+  getLastPlayedCard(): Card_Class {
+    return this.lastPlayedCard;
+  }
+
+  handleCPU(): void {
+    switch (this.gamePhase) {
+      case GamePhases.Player1:
+        console.log("Implement player1 func");
+        break;
+      case GamePhases.Player2:
+        this.setLastPlayedCard(2, this.allHands[1][0]);
+        break;
+      case GamePhases.Player3:
+        this.setLastPlayedCard(3, this.allHands[2][0]);
+        break;
+      case GamePhases.Player4:
+        this.setLastPlayedCard(4, this.allHands[3][0]);
+        break;
+    }
+    console.log(this.gamePhase);
+    this.nextPlayerTurn();
   }
 
   tradeCards(): void {
@@ -106,12 +135,16 @@ class GameManager {
     switch (this.gamePhase) {
       case GamePhases.Player1:
         this.setGamePhase(GamePhases.Player2);
+        break;
       case GamePhases.Player2:
         this.setGamePhase(GamePhases.Player3);
+        break;
       case GamePhases.Player3:
         this.setGamePhase(GamePhases.Player4);
+        break;
       case GamePhases.Player4:
         this.setGamePhase(GamePhases.Player1);
+        break;
     }
   }
 
