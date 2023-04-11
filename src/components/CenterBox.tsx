@@ -23,7 +23,7 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   );
 
   //FUNCTIONS
-  function tradeCards(): void {
+  function executeTurn(): void {
     if (!cardInCenter) {
       gameManager.tradeCards();
       updateCards();
@@ -50,7 +50,7 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   return (
     <div className="centerBox">
       {cardInCenter ? content : "Please Select 3 Cards To Trade"}
-      <button onClick={tradeCards}>Send</button>
+      <button onClick={executeTurn}>Send</button>
     </div>
   );
 };

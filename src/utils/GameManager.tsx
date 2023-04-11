@@ -8,6 +8,8 @@ class GameManager {
   selectedCards: Card_Class[][];
   gamePhase: GamePhases;
   lastPlayedCard: Card_Class;
+  round: number;
+  startingCardPosition: number[];
 
   constructor() {
     this.instance = this;
@@ -15,7 +17,9 @@ class GameManager {
     this.allHands = [...this.initHands];
     this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Trading;
-    this.lastPlayedCard = new Card_Class(2, "Clubs", 28);
+    this.lastPlayedCard = new Card_Class(0, "Clubs", 100);
+    this.round = 0;
+    this.startingCardPosition = [];
   }
 
   dealCards(): void {
@@ -69,23 +73,43 @@ class GameManager {
   }
 
   handleTurns(): void {
-    console.log(this.gamePhase);
-    switch (this.gamePhase) {
-      case GamePhases.Player1:
-        this.setLastPlayedCard(1, this.getSelectedCards(1)[0]);
-        this.resetSelectedCards();
-        break;
-      case GamePhases.Player2:
-        this.setLastPlayedCard(2, this.allHands[1][0]);
-        break;
-      case GamePhases.Player3:
-        this.setLastPlayedCard(3, this.allHands[2][0]);
-        break;
-      case GamePhases.Player4:
-        this.setLastPlayedCard(4, this.allHands[3][0]);
-        break;
+    console.log(this.round);
+    if (this.round === 0) {
+      const i = this.startingCardPosition[0];
+      const j = this.startingCardPosition[1];
+      switch (this.gamePhase) {
+        case GamePhases.Player1:
+          this.setLastPlayedCard(1, this.allHands[i][j]);
+          break;
+        case GamePhases.Player2:
+          this.setLastPlayedCard(2, this.allHands[i][j]);
+          break;
+        case GamePhases.Player3:
+          this.setLastPlayedCard(3, this.allHands[i][j]);
+          break;
+        case GamePhases.Player4:
+          this.setLastPlayedCard(4, this.allHands[i][j]);
+          break;
+      }
+    } else {
+      switch (this.gamePhase) {
+        case GamePhases.Player1:
+          this.setLastPlayedCard(1, this.getSelectedCards(1)[0]);
+          this.resetSelectedCards();
+          break;
+        case GamePhases.Player2:
+          this.setLastPlayedCard(2, this.allHands[1][0]);
+          break;
+        case GamePhases.Player3:
+          this.setLastPlayedCard(3, this.allHands[2][0]);
+          break;
+        case GamePhases.Player4:
+          this.setLastPlayedCard(4, this.allHands[3][0]);
+          break;
+      }
     }
     this.nextPlayerTurn();
+    this.round++;
   }
 
   tradeCards(): void {
@@ -102,6 +126,7 @@ class GameManager {
         }
       }
     }
+    this.resetSelectedCards();
   }
 
   generateSelectedCards(): void {
@@ -119,21 +144,30 @@ class GameManager {
           switch (i) {
             case 0:
               this.setGamePhase(GamePhases.Player1);
+              this.startingCardPosition.push(i);
+              this.startingCardPosition.push(j);
               break;
             case 1:
               this.setGamePhase(GamePhases.Player2);
+              this.startingCardPosition.push(i);
+              this.startingCardPosition.push(j);
               break;
             case 2:
               this.setGamePhase(GamePhases.Player3);
+              this.startingCardPosition.push(i);
+              this.startingCardPosition.push(j);
               break;
             case 3:
               this.setGamePhase(GamePhases.Player4);
+              this.startingCardPosition.push(i);
+              this.startingCardPosition.push(j);
               break;
           }
         }
       }
     }
     console.log(this.gamePhase);
+    console.log(this.startingCardPosition);
   }
 
   nextPlayerTurn(): void {
