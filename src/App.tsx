@@ -42,6 +42,8 @@ const App: React.FC = () => {
     setPlayer4Hand(mapToCardComponent(gameManager.getPlayerCards(4)));
   }
 
+  function mainLoop(): void {}
+
   return (
     <div className="app">
       <div id="pbox4">

@@ -10,6 +10,7 @@ class GameManager {
   lastPlayedCard: Card_Class;
   round: number;
   startingCardPosition: number[];
+  startingPlayer: GamePhases;
 
   constructor() {
     this.instance = this;
@@ -18,8 +19,9 @@ class GameManager {
     this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Trading;
     this.lastPlayedCard = new Card_Class(0, "Clubs", 100);
-    this.round = 0;
+    this.round = 1;
     this.startingCardPosition = [];
+    this.startingPlayer = GamePhases.FirstTurn;
   }
 
   dealCards(): void {
@@ -74,7 +76,7 @@ class GameManager {
 
   handleTurns(): void {
     console.log(this.round);
-    if (this.round === 0) {
+    if (this.round === 1) {
       const i = this.startingCardPosition[0];
       const j = this.startingCardPosition[1];
       switch (this.gamePhase) {
@@ -199,6 +201,7 @@ class GameManager {
 //TS
 export enum GamePhases {
   Trading = "trading",
+  FirstTurn = "firstTurn",
   Player1 = "player1",
   Player2 = "player2",
   Player3 = "player3",
