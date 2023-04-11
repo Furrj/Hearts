@@ -15,7 +15,7 @@ interface IProps {
 
 const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   //STATE
-  const [cardInCenter, setCardInCenter] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
 
   //CONTENT
   let content: JSX.Element = createCardComponent(
@@ -23,23 +23,17 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
   );
 
   //FUNCTIONS
-  function tradeCards(): void {
-    if (!cardInCenter) {
+  function executeTurn(): void {
+    if (gameManager.getGamePhase() === GamePhases.Trading) {
       gameManager.tradeCards();
       updateCards();
       gameManager.findStartingPlayer();
       gameManager.resetSelectedCards();
-      setCardInCenter(true);
     } else {
-      if (gameManager.getGamePhase() !== GamePhases.Player1) {
-        gameManager.handleTurns();
-        content = createCardComponent(gameManager.getLastPlayedCard());
-        updateCards();
-      } else if (gameManager.getGamePhase() === GamePhases.Player1) {
-        gameManager.handleTurns();
-        content = createCardComponent(gameManager.getLastPlayedCard());
-        updateCards();
-      }
+      gameManager.handleTurns();
+      content = createCardComponent(gameManager.getLastPlayedCard());
+      updateCards();
+      setGameStarted(true);
     }
   }
 
@@ -49,8 +43,8 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
 
   return (
     <div className="centerBox">
-      {cardInCenter ? content : "Please Select 3 Cards To Trade"}
-      <button onClick={tradeCards}>Send</button>
+      {gameStarted ? content : "Please Select 3 Cards To Trade"}
+      <button onClick={executeTurn}>Send</button>
     </div>
   );
 };
