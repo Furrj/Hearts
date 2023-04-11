@@ -79,18 +79,22 @@ class GameManager {
     if (this.round === 1) {
       const i = this.startingCardPosition[0];
       const j = this.startingCardPosition[1];
-      switch (this.gamePhase) {
+      switch (this.startingPlayer) {
         case GamePhases.Player1:
           this.setLastPlayedCard(1, this.allHands[i][j]);
+          this.gamePhase = GamePhases.Player1;
           break;
         case GamePhases.Player2:
           this.setLastPlayedCard(2, this.allHands[i][j]);
+          this.gamePhase = GamePhases.Player2;
           break;
         case GamePhases.Player3:
           this.setLastPlayedCard(3, this.allHands[i][j]);
+          this.gamePhase = GamePhases.Player3;
           break;
         case GamePhases.Player4:
           this.setLastPlayedCard(4, this.allHands[i][j]);
+          this.gamePhase = GamePhases.Player4;
           break;
       }
     } else {
@@ -112,6 +116,7 @@ class GameManager {
     }
     this.nextPlayerTurn();
     this.round++;
+    console.log(this.gamePhase);
   }
 
   tradeCards(): void {
@@ -140,27 +145,28 @@ class GameManager {
   }
 
   findStartingPlayer(): void {
+    this.setGamePhase(GamePhases.FirstTurn);
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 13; j++) {
         if (this.allHands[i][j].id === 28) {
           switch (i) {
             case 0:
-              this.setGamePhase(GamePhases.Player1);
+              this.startingPlayer = GamePhases.Player1;
               this.startingCardPosition.push(i);
               this.startingCardPosition.push(j);
               break;
             case 1:
-              this.setGamePhase(GamePhases.Player2);
+              this.startingPlayer = GamePhases.Player2;
               this.startingCardPosition.push(i);
               this.startingCardPosition.push(j);
               break;
             case 2:
-              this.setGamePhase(GamePhases.Player3);
+              this.startingPlayer = GamePhases.Player3;
               this.startingCardPosition.push(i);
               this.startingCardPosition.push(j);
               break;
             case 3:
-              this.setGamePhase(GamePhases.Player4);
+              this.startingPlayer = GamePhases.Player4;
               this.startingCardPosition.push(i);
               this.startingCardPosition.push(j);
               break;
@@ -168,7 +174,7 @@ class GameManager {
         }
       }
     }
-    console.log(this.gamePhase);
+    console.log(this.startingPlayer);
     console.log(this.startingCardPosition);
   }
 
