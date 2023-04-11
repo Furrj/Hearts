@@ -28,6 +28,8 @@ const App: React.FC = () => {
     mapToCardComponent(gameManager.getPlayerCards(4))
   );
 
+  const [validSelect, setValidSelect] = useState<boolean>(false);
+
   //FUNCTIONS
   function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
     return cards.map((card) => {
@@ -62,7 +64,11 @@ const App: React.FC = () => {
         <p>Player 1</p>
         <div className="pboxX">{player1Hand}</div>
       </div>
-      <CenterBox gameManager={gameManager} updateCards={updateCards} />
+      <CenterBox
+        gameManager={gameManager}
+        updateCards={updateCards}
+        validSelect={validSelect}
+      />
     </div>
   );
 };

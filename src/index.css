@@ -139,3 +139,9 @@ img {
   border-bottom-right-radius: 4px;
   cursor: pointer;
 }
+
+#invalidSelect {
+  background-color: black;
+  cursor: default;
+  pointer-events: none;
+}
