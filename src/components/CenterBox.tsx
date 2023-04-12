@@ -12,12 +12,14 @@ interface IProps {
   gameManager: GameManager;
   updateCards: () => void;
   validSelect: boolean;
+  setValidSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CenterBox: React.FC<IProps> = ({
   gameManager,
   updateCards,
   validSelect,
+  setValidSelect,
 }) => {
   //STATE
   const [gameStarted, setGameStarted] = useState<boolean>(false);
@@ -30,7 +32,10 @@ const CenterBox: React.FC<IProps> = ({
       message = "Please select 3 cards to trade";
       break;
     case GamePhases.FirstTurn:
-      message = "Press select button to start";
+      message =
+        gameManager.getStartingPlayer() === GamePhases.Player1
+          ? "You have the 2 of Clubs, press select to start game"
+          : `${gameManager.getStartingPlayer()} has the 2 of Clubs, press select to start game`;
       break;
   }
 
@@ -51,6 +56,9 @@ const CenterBox: React.FC<IProps> = ({
       card = createCardComponent(gameManager.getLastPlayedCard());
       updateCards();
       setGameStarted(true);
+      if (gameManager.getGamePhase() === GamePhases.Player1) {
+        setValidSelect(false);
+      }
     }
   }
 

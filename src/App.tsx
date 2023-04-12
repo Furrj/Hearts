@@ -75,6 +75,7 @@ const App: React.FC = () => {
         gameManager={gameManager}
         updateCards={updateCards}
         validSelect={validSelect}
+        setValidSelect={setValidSelect}
       />
     </div>
   );

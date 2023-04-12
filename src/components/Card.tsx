@@ -15,7 +15,7 @@ import GameManager, { GamePhases } from "../utils/GameManager";
 interface IProps {
   cardInfo: Card_Class;
   gameManager: GameManager;
-  setValidSelect?: any;
+  setValidSelect?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 enum ColorClass {
@@ -61,14 +61,16 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager, setValidSelect }) => {
       } else if (selected) {
         setSelected(false);
         gameManager.removeSelectedCard(1, cardInfo.id);
-        setValidSelect(false);
+        if (setValidSelect) setValidSelect(false);
       }
     } else if (gameManager.getGamePhase() === GamePhases.Player1) {
       if (gameManager.getSelectedCards(1).length === 0 && !selected) {
         setSelected(true);
+        if (setValidSelect) setValidSelect(true);
         gameManager.addSelectedCard(1, cardInfo);
       } else if (selected) {
         setSelected(false);
+        if (setValidSelect) setValidSelect(false);
         gameManager.removeSelectedCard(1, cardInfo.id);
       }
     }
