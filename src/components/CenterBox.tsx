@@ -13,6 +13,9 @@ interface IProps {
   updateCards: () => void;
   validSelect: boolean;
   setValidSelect: React.Dispatch<React.SetStateAction<boolean>>;
+  card?: JSX.Element;
+  gameStarted: boolean;
+  mainLoop: () => void;
 }
 
 const CenterBox: React.FC<IProps> = ({
@@ -20,10 +23,10 @@ const CenterBox: React.FC<IProps> = ({
   updateCards,
   validSelect,
   setValidSelect,
+  card,
+  gameStarted,
+  mainLoop,
 }) => {
-  //STATE
-  const [gameStarted, setGameStarted] = useState<boolean>(false);
-
   //CONTENT
   let message: string = "";
 
@@ -39,8 +42,6 @@ const CenterBox: React.FC<IProps> = ({
       break;
   }
 
-  let card: JSX.Element = createCardComponent(gameManager.getLastPlayedCard());
-
   let buttonClass: string = validSelect ? "" : "invalidSelect";
 
   //FUNCTIONS
@@ -52,13 +53,14 @@ const CenterBox: React.FC<IProps> = ({
       updateCards();
       console.log(gameManager.getGamePhase());
     } else {
-      gameManager.handleTurns();
-      card = createCardComponent(gameManager.getLastPlayedCard());
-      updateCards();
-      setGameStarted(true);
-      if (gameManager.getGamePhase() === GamePhases.Player1) {
-        setValidSelect(false);
-      }
+      // gameManager.handleTurns();
+      // card = createCardComponent(gameManager.getLastPlayedCard());
+      // updateCards();
+      // setGameStarted(true);
+      // if (gameManager.getGamePhase() === GamePhases.Player1) {
+      //   setValidSelect(false);
+      // }
+      mainLoop();
     }
   }
 

@@ -13,6 +13,7 @@ const gameManager: GameManager = new GameManager();
 const App: React.FC = () => {
   //STATE
   const [validSelect, setValidSelect] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
 
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(1))
@@ -29,6 +30,8 @@ const App: React.FC = () => {
   const [player4Hand, setPlayer4Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(4))
   );
+
+  const [centerBoxCard, setCenterBoxCard] = useState<JSX.Element>();
 
   //FUNCTIONS
   function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
@@ -51,7 +54,20 @@ const App: React.FC = () => {
     setPlayer4Hand(mapToCardComponent(gameManager.getPlayerCards(4)));
   }
 
-  function mainLoop(): void {}
+  function mainLoop(): void {
+    gameManager.handleTurns();
+    setCenterBoxCard(
+      <Card
+        cardInfo={gameManager.getLastPlayedCard()}
+        gameManager={gameManager}
+      />
+    );
+    updateCards();
+    setGameStarted(true);
+    if (gameManager.getGamePhase() === GamePhases.Player1) {
+      setValidSelect(false);
+    }
+  }
 
   return (
     <div className="app">
@@ -76,6 +92,9 @@ const App: React.FC = () => {
         updateCards={updateCards}
         validSelect={validSelect}
         setValidSelect={setValidSelect}
+        card={centerBoxCard}
+        gameStarted={gameStarted}
+        mainLoop={mainLoop}
       />
     </div>
   );
