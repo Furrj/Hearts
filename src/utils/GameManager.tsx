@@ -178,6 +178,10 @@ class GameManager {
     console.log(this.startingCardPosition);
   }
 
+  getStartingPlayer(): GamePhases {
+    return this.startingPlayer;
+  }
+
   nextPlayerTurn(): void {
     switch (this.gamePhase) {
       case GamePhases.Player1:

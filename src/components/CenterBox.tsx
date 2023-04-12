@@ -11,29 +11,54 @@ import Card from "./Card";
 interface IProps {
   gameManager: GameManager;
   updateCards: () => void;
+  validSelect: boolean;
+  setValidSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
+const CenterBox: React.FC<IProps> = ({
+  gameManager,
+  updateCards,
+  validSelect,
+  setValidSelect,
+}) => {
   //STATE
   const [gameStarted, setGameStarted] = useState<boolean>(false);
 
   //CONTENT
-  let content: JSX.Element = createCardComponent(
-    gameManager.getLastPlayedCard()
-  );
+  let message: string = "";
+
+  switch (gameManager.getGamePhase()) {
+    case GamePhases.Trading:
+      message = "Please select 3 cards to trade";
+      break;
+    case GamePhases.FirstTurn:
+      message =
+        gameManager.getStartingPlayer() === GamePhases.Player1
+          ? "You have the 2 of Clubs, press select to start game"
+          : `${gameManager.getStartingPlayer()} has the 2 of Clubs, press select to start game`;
+      break;
+  }
+
+  let card: JSX.Element = createCardComponent(gameManager.getLastPlayedCard());
+
+  let buttonClass: string = validSelect ? "" : "invalidSelect";
 
   //FUNCTIONS
   function executeTurn(): void {
     if (gameManager.getGamePhase() === GamePhases.Trading) {
       gameManager.tradeCards();
-      updateCards();
       gameManager.findStartingPlayer();
       gameManager.resetSelectedCards();
+      updateCards();
+      console.log(gameManager.getGamePhase());
     } else {
       gameManager.handleTurns();
-      content = createCardComponent(gameManager.getLastPlayedCard());
+      card = createCardComponent(gameManager.getLastPlayedCard());
       updateCards();
       setGameStarted(true);
+      if (gameManager.getGamePhase() === GamePhases.Player1) {
+        setValidSelect(false);
+      }
     }
   }
 
@@ -43,8 +68,10 @@ const CenterBox: React.FC<IProps> = ({ gameManager, updateCards }) => {
 
   return (
     <div className="centerBox">
-      {gameStarted ? content : "Please Select 3 Cards To Trade"}
-      <button onClick={executeTurn}>Send</button>
+      {gameStarted ? card : message}
+      <button id={buttonClass} onClick={executeTurn}>
+        Send
+      </button>
     </div>
   );
 };

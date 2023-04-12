@@ -12,6 +12,8 @@ const gameManager: GameManager = new GameManager();
 
 const App: React.FC = () => {
   //STATE
+  const [validSelect, setValidSelect] = useState<boolean>(false);
+
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(1))
   );
@@ -31,7 +33,14 @@ const App: React.FC = () => {
   //FUNCTIONS
   function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
     return cards.map((card) => {
-      return <Card cardInfo={card} gameManager={gameManager} key={card.id} />;
+      return (
+        <Card
+          cardInfo={card}
+          gameManager={gameManager}
+          setValidSelect={setValidSelect}
+          key={card.id}
+        />
+      );
     });
   }
 
@@ -62,7 +71,12 @@ const App: React.FC = () => {
         <p>Player 1</p>
         <div className="pboxX">{player1Hand}</div>
       </div>
-      <CenterBox gameManager={gameManager} updateCards={updateCards} />
+      <CenterBox
+        gameManager={gameManager}
+        updateCards={updateCards}
+        validSelect={validSelect}
+        setValidSelect={setValidSelect}
+      />
     </div>
   );
 };
