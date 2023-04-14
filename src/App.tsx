@@ -52,16 +52,16 @@ const App: React.FC = () => {
     setPlayer2Hand(mapToCardComponent(gameManager.getPlayerCards(2)));
     setPlayer3Hand(mapToCardComponent(gameManager.getPlayerCards(3)));
     setPlayer4Hand(mapToCardComponent(gameManager.getPlayerCards(4)));
-  }
-
-  function mainLoop(): void {
-    gameManager.handleTurns();
     setCenterBoxCard(
       <Card
         cardInfo={gameManager.getLastPlayedCard()}
         gameManager={gameManager}
       />
     );
+  }
+
+  function mainLoop(): void {
+    gameManager.handleTurns();
     updateCards();
     setGameStarted(true);
     if (gameManager.getGamePhase() === GamePhases.Player1) {
