@@ -63,14 +63,28 @@ const App: React.FC = () => {
     );
   }
 
-  //Main game loop, ideally will be self-executing instead of triggered each turn
-  function mainLoop(): void {
-    gameManager.handleTurns();
-    updateCards();
-    setGameStarted(true);
-    if (gameManager.getGamePhase() === GamePhases.Player1) {
+  //Handle CPU turns
+  let run: boolean = true;
+  function cpuTurns(): void {
+    console.log("Running cpuTurns()");
+    if (gameManager.getGamePhase() !== GamePhases.Player1) {
+      gameManager.handleTurns();
+      updateCards();
+    } else {
+      run = false;
       setValidSelect(false);
     }
+  }
+
+  //Main game loop, ideally will be self-executing instead of triggered each turn
+  function mainLoop(): void {
+    const gameInterval: number = setInterval(() => {
+      if (!run) clearInterval(gameInterval);
+      else {
+        cpuTurns();
+        setGameStarted(true);
+      }
+    }, 1000);
   }
 
   return (
@@ -98,6 +112,7 @@ const App: React.FC = () => {
         setValidSelect={setValidSelect}
         card={centerBoxCard}
         gameStarted={gameStarted}
+        cpuTurns={cpuTurns}
         mainLoop={mainLoop}
       />
     </div>

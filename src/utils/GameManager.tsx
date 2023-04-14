@@ -87,20 +87,20 @@ class GameManager {
       //Set gamePhase to player holding 2 of Clubs and set it to this.lastPlayedCard
       switch (this.startingPlayer) {
         case GamePhases.Player1:
-          this.setLastPlayedCard(1, this.allHands[i][j]);
           this.gamePhase = GamePhases.Player1;
+          this.setLastPlayedCard(1, this.allHands[i][j]);
           break;
         case GamePhases.Player2:
-          this.setLastPlayedCard(2, this.allHands[i][j]);
           this.gamePhase = GamePhases.Player2;
+          this.setLastPlayedCard(2, this.allHands[i][j]);
           break;
         case GamePhases.Player3:
-          this.setLastPlayedCard(3, this.allHands[i][j]);
           this.gamePhase = GamePhases.Player3;
+          this.setLastPlayedCard(3, this.allHands[i][j]);
           break;
         case GamePhases.Player4:
-          this.setLastPlayedCard(4, this.allHands[i][j]);
           this.gamePhase = GamePhases.Player4;
+          this.setLastPlayedCard(4, this.allHands[i][j]);
           break;
       }
       //To be executed every turn after the first

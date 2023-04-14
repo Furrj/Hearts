@@ -15,6 +15,7 @@ interface IProps {
   setValidSelect: React.Dispatch<React.SetStateAction<boolean>>;
   card?: JSX.Element;
   gameStarted: boolean;
+  cpuTurns: () => void;
   mainLoop: () => void;
 }
 
@@ -25,6 +26,7 @@ const CenterBox: React.FC<IProps> = ({
   setValidSelect,
   card,
   gameStarted,
+  cpuTurns,
   mainLoop,
 }) => {
   //Message for centerbox in trading phase/first turn
@@ -38,7 +40,7 @@ const CenterBox: React.FC<IProps> = ({
       message =
         gameManager.getStartingPlayer() === GamePhases.Player1
           ? "You have the 2 of Clubs, press select to start game"
-          : `${gameManager.getStartingPlayer()} has the 2 of Clubs, press select to start game`;
+          : `${gameManager.getStartingPlayer()} has the 2 of Clubs`;
       break;
   }
 
@@ -52,8 +54,6 @@ const CenterBox: React.FC<IProps> = ({
       gameManager.findStartingPlayer();
       gameManager.resetSelectedCards();
       updateCards();
-      console.log(gameManager.getGamePhase());
-    } else {
       mainLoop();
     }
   }
