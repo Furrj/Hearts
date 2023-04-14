@@ -55,6 +55,11 @@ const CenterBox: React.FC<IProps> = ({
       gameManager.resetSelectedCards();
       updateCards();
       mainLoop();
+    } else if (gameManager.getGamePhase() === GamePhases.Player1) {
+      gameManager.handleTurns();
+      updateCards();
+      mainLoop();
+      setValidSelect(false);
     }
   }
 

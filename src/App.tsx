@@ -70,9 +70,9 @@ const App: React.FC = () => {
     if (gameManager.getGamePhase() !== GamePhases.Player1) {
       gameManager.handleTurns();
       updateCards();
-    } else {
-      run = false;
-      setValidSelect(false);
+      if (gameManager.getGamePhase() === GamePhases.Player1) {
+        run = false;
+      }
     }
   }
 
