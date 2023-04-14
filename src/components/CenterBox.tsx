@@ -13,6 +13,10 @@ interface IProps {
   updateCards: () => void;
   validSelect: boolean;
   setValidSelect: React.Dispatch<React.SetStateAction<boolean>>;
+  card?: JSX.Element;
+  gameStarted: boolean;
+  cpuTurns: () => void;
+  mainLoop: () => void;
 }
 
 const CenterBox: React.FC<IProps> = ({
@@ -20,11 +24,12 @@ const CenterBox: React.FC<IProps> = ({
   updateCards,
   validSelect,
   setValidSelect,
+  card,
+  gameStarted,
+  cpuTurns,
+  mainLoop,
 }) => {
-  //STATE
-  const [gameStarted, setGameStarted] = useState<boolean>(false);
-
-  //CONTENT
+  //Message for centerbox in trading phase/first turn
   let message: string = "";
 
   switch (gameManager.getGamePhase()) {
@@ -35,12 +40,11 @@ const CenterBox: React.FC<IProps> = ({
       message =
         gameManager.getStartingPlayer() === GamePhases.Player1
           ? "You have the 2 of Clubs, press select to start game"
-          : `${gameManager.getStartingPlayer()} has the 2 of Clubs, press select to start game`;
+          : `${gameManager.getStartingPlayer()} has the 2 of Clubs`;
       break;
   }
 
-  let card: JSX.Element = createCardComponent(gameManager.getLastPlayedCard());
-
+  //Classname for enabling/disabling select button
   let buttonClass: string = validSelect ? "" : "invalidSelect";
 
   //FUNCTIONS
@@ -50,20 +54,13 @@ const CenterBox: React.FC<IProps> = ({
       gameManager.findStartingPlayer();
       gameManager.resetSelectedCards();
       updateCards();
-      console.log(gameManager.getGamePhase());
-    } else {
+      mainLoop();
+    } else if (gameManager.getGamePhase() === GamePhases.Player1) {
       gameManager.handleTurns();
-      card = createCardComponent(gameManager.getLastPlayedCard());
       updateCards();
-      setGameStarted(true);
-      if (gameManager.getGamePhase() === GamePhases.Player1) {
-        setValidSelect(false);
-      }
+      mainLoop();
+      setValidSelect(false);
     }
-  }
-
-  function createCardComponent(cardInfo: Card_Class): JSX.Element {
-    return <Card cardInfo={cardInfo} gameManager={gameManager} />;
   }
 
   return (

@@ -11,9 +11,12 @@ import { Card as Card_Class } from "./utils/initCards";
 const gameManager: GameManager = new GameManager();
 
 const App: React.FC = () => {
-  //STATE
+  //State bool for allowing select to be pressed
   const [validSelect, setValidSelect] = useState<boolean>(false);
+  //State bool for tracking if in main game loop
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
 
+  //State arrays for keeping player hands
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(1))
   );
@@ -29,6 +32,9 @@ const App: React.FC = () => {
   const [player4Hand, setPlayer4Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(4))
   );
+
+  //State card component for last played card in centerbox
+  const [centerBoxCard, setCenterBoxCard] = useState<JSX.Element>();
 
   //FUNCTIONS
   function mapToCardComponent(cards: Card_Class[]): JSX.Element[] {
@@ -49,9 +55,37 @@ const App: React.FC = () => {
     setPlayer2Hand(mapToCardComponent(gameManager.getPlayerCards(2)));
     setPlayer3Hand(mapToCardComponent(gameManager.getPlayerCards(3)));
     setPlayer4Hand(mapToCardComponent(gameManager.getPlayerCards(4)));
+    setCenterBoxCard(
+      <Card
+        cardInfo={gameManager.getLastPlayedCard()}
+        gameManager={gameManager}
+      />
+    );
   }
 
-  function mainLoop(): void {}
+  //Handle CPU turns
+  let run: boolean = true;
+  function cpuTurns(): void {
+    console.log("Running cpuTurns()");
+    if (gameManager.getGamePhase() !== GamePhases.Player1) {
+      gameManager.handleTurns();
+      updateCards();
+      if (gameManager.getGamePhase() === GamePhases.Player1) {
+        run = false;
+      }
+    }
+  }
+
+  //Main game loop, ideally will be self-executing instead of triggered each turn
+  function mainLoop(): void {
+    const gameInterval: number = setInterval(() => {
+      if (!run) clearInterval(gameInterval);
+      else {
+        cpuTurns();
+        setGameStarted(true);
+      }
+    }, 1000);
+  }
 
   return (
     <div className="app">
@@ -76,6 +110,10 @@ const App: React.FC = () => {
         updateCards={updateCards}
         validSelect={validSelect}
         setValidSelect={setValidSelect}
+        card={centerBoxCard}
+        gameStarted={gameStarted}
+        cpuTurns={cpuTurns}
+        mainLoop={mainLoop}
       />
     </div>
   );

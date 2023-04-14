@@ -24,12 +24,16 @@ enum ColorClass {
 }
 
 const Card: React.FC<IProps> = ({ cardInfo, gameManager, setValidSelect }) => {
+  //State bool for adding card to selectedCards[] in GameManager
   const [selected, setSelected] = useState<Boolean>(false);
 
-  let icon: any;
+  //Classname to change color of selected cards
   let colorClass: ColorClass = selected
     ? ColorClass.selected
     : ColorClass.normal;
+
+  //Generate icon based on suit of card
+  let icon: any;
 
   switch (cardInfo.suit) {
     case "Hearts":
@@ -48,26 +52,33 @@ const Card: React.FC<IProps> = ({ cardInfo, gameManager, setValidSelect }) => {
 
   //FUNCTIONS
   function selectCard(): void {
+    //If game is currently in trading phase
     if (gameManager.getGamePhase() === GamePhases.Trading) {
+      //If card is 3rd card to be selected, enable select button
       if (gameManager.getSelectedCards(1).length === 2 && !selected) {
         if (setValidSelect) {
           setValidSelect(true);
         }
       }
 
+      //If card is eligible to be selected, add to selectedCards[]
       if (gameManager.getSelectedCards(1).length < 3 && !selected) {
         setSelected(true);
         gameManager.addSelectedCard(1, cardInfo);
+        //If card has already been selected, remove from selectedCards[] and disable select button
       } else if (selected) {
         setSelected(false);
         gameManager.removeSelectedCard(1, cardInfo.id);
         if (setValidSelect) setValidSelect(false);
       }
+      //If player1's turn
     } else if (gameManager.getGamePhase() === GamePhases.Player1) {
+      //If card is eligible to be selected, add to selectedCards[] and enable select button
       if (gameManager.getSelectedCards(1).length === 0 && !selected) {
         setSelected(true);
         if (setValidSelect) setValidSelect(true);
         gameManager.addSelectedCard(1, cardInfo);
+        //If card has already been selected, remove from selectedCards[] and disable select button
       } else if (selected) {
         setSelected(false);
         if (setValidSelect) setValidSelect(false);
