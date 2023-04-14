@@ -11,10 +11,12 @@ import { Card as Card_Class } from "./utils/initCards";
 const gameManager: GameManager = new GameManager();
 
 const App: React.FC = () => {
-  //STATE
+  //State bool for allowing select to be pressed
   const [validSelect, setValidSelect] = useState<boolean>(false);
+  //State bool for tracking if in main game loop
   const [gameStarted, setGameStarted] = useState<boolean>(false);
 
+  //State arrays for keeping player hands
   const [player1Hand, setPlayer1Hand] = useState<JSX.Element[]>(
     mapToCardComponent(gameManager.getPlayerCards(1))
   );
@@ -31,6 +33,7 @@ const App: React.FC = () => {
     mapToCardComponent(gameManager.getPlayerCards(4))
   );
 
+  //State card component for last played card in centerbox
   const [centerBoxCard, setCenterBoxCard] = useState<JSX.Element>();
 
   //FUNCTIONS
@@ -60,6 +63,7 @@ const App: React.FC = () => {
     );
   }
 
+  //Main game loop, ideally will be self-executing instead of triggered each turn
   function mainLoop(): void {
     gameManager.handleTurns();
     updateCards();

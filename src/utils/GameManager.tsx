@@ -33,10 +33,7 @@ class GameManager {
     return this.allHands;
   }
 
-  getPlayerCards(player: number): Card_Class[] {
-    return this.allHands[player - 1];
-  }
-
+  //Next 3 functions for handling each player's hand with this.allHands[]
   addPlayerCard(player: number, card: Card_Class): void {
     this.allHands[player - 1].push(card);
   }
@@ -47,10 +44,11 @@ class GameManager {
     );
   }
 
-  getSelectedCards(player: number): Card_Class[] {
-    return this.selectedCards[player - 1];
+  getPlayerCards(player: number): Card_Class[] {
+    return this.allHands[player - 1];
   }
 
+  //Next 4 functions for handling each player's selected cards with this.selectedCards[]
   addSelectedCard(player: number, card: Card_Class): void {
     this.selectedCards[player - 1].push(card);
   }
@@ -61,10 +59,15 @@ class GameManager {
     );
   }
 
+  getSelectedCards(player: number): Card_Class[] {
+    return this.selectedCards[player - 1];
+  }
+
   resetSelectedCards(): void {
     this.selectedCards = [[], [], [], []];
   }
 
+  //Next 2 functions for handling this.lastPlayedCard
   setLastPlayedCard(player: number, card: Card_Class): void {
     this.removePlayerCard(player, card.id);
     this.lastPlayedCard = card;
@@ -74,11 +77,14 @@ class GameManager {
     return this.lastPlayedCard;
   }
 
+  //Functino to be executed for each player's turn
   handleTurns(): void {
     console.log(this.round);
+    //To be executed on the first turn (i.e. play the 2 of Clubs automatically)
     if (this.round === 1) {
       const i = this.startingCardPosition[0];
       const j = this.startingCardPosition[1];
+      //Set gamePhase to player holding 2 of Clubs and set it to this.lastPlayedCard
       switch (this.startingPlayer) {
         case GamePhases.Player1:
           this.setLastPlayedCard(1, this.allHands[i][j]);
@@ -97,7 +103,9 @@ class GameManager {
           this.gamePhase = GamePhases.Player4;
           break;
       }
+      //To be executed every turn after the first
     } else {
+      //Set this.lastPlayedCard to selected card based on player turn
       switch (this.gamePhase) {
         case GamePhases.Player1:
           this.setLastPlayedCard(1, this.getSelectedCards(1)[0]);
@@ -114,14 +122,17 @@ class GameManager {
           break;
       }
     }
+    //Advance gamePhase to next player in line
     this.nextPlayerTurn();
     this.round++;
     console.log(this.gamePhase);
   }
 
+  //Function to send 3 selected cards from each player in trading phase
   tradeCards(): void {
     this.generateSelectedCards();
 
+    //Add each player's selectedCards to next player's hand, then remove from their hand
     for (let i = 0; i <= 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (i < 3) {
@@ -136,6 +147,7 @@ class GameManager {
     this.resetSelectedCards();
   }
 
+  //Function to add 3 cards to each cpu player's this.selectedCards[]
   generateSelectedCards(): void {
     for (let i = 1; i <= 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -144,6 +156,7 @@ class GameManager {
     }
   }
 
+  //Find which player has 2 of Clubs, set to this.startingPlayer, and store position of 2 of Clubs
   findStartingPlayer(): void {
     this.setGamePhase(GamePhases.FirstTurn);
     for (let i = 0; i < 4; i++) {
@@ -182,6 +195,7 @@ class GameManager {
     return this.startingPlayer;
   }
 
+  //Function to change this.gamePhase to next player in line
   nextPlayerTurn(): void {
     switch (this.gamePhase) {
       case GamePhases.Player1:
@@ -199,6 +213,7 @@ class GameManager {
     }
   }
 
+  //Next 2 functions for handling this.gamePhase
   getGamePhase(): GamePhases {
     return this.gamePhase;
   }
@@ -208,7 +223,7 @@ class GameManager {
   }
 }
 
-//TS
+//Enum to keep track of possible GamePhases
 export enum GamePhases {
   Trading = "trading",
   FirstTurn = "firstTurn",
