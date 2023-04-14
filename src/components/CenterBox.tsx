@@ -27,7 +27,7 @@ const CenterBox: React.FC<IProps> = ({
   gameStarted,
   mainLoop,
 }) => {
-  //CONTENT
+  //Message for centerbox in trading phase/first turn
   let message: string = "";
 
   switch (gameManager.getGamePhase()) {
@@ -42,6 +42,7 @@ const CenterBox: React.FC<IProps> = ({
       break;
   }
 
+  //Classname for enabling/disabling select button
   let buttonClass: string = validSelect ? "" : "invalidSelect";
 
   //FUNCTIONS
@@ -62,10 +63,6 @@ const CenterBox: React.FC<IProps> = ({
       // }
       mainLoop();
     }
-  }
-
-  function createCardComponent(cardInfo: Card_Class): JSX.Element {
-    return <Card cardInfo={cardInfo} gameManager={gameManager} />;
   }
 
   return (
