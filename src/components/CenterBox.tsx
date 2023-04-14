@@ -54,13 +54,6 @@ const CenterBox: React.FC<IProps> = ({
       updateCards();
       console.log(gameManager.getGamePhase());
     } else {
-      // gameManager.handleTurns();
-      // card = createCardComponent(gameManager.getLastPlayedCard());
-      // updateCards();
-      // setGameStarted(true);
-      // if (gameManager.getGamePhase() === GamePhases.Player1) {
-      //   setValidSelect(false);
-      // }
       mainLoop();
     }
   }
