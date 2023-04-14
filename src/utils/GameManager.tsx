@@ -8,9 +8,10 @@ class GameManager {
   selectedCards: Card_Class[][];
   gamePhase: GamePhases;
   lastPlayedCard: Card_Class;
-  round: number;
+  turn: number;
   startingCardPosition: number[];
   startingPlayer: GamePhases;
+  round: number;
 
   constructor() {
     this.instance = this;
@@ -19,6 +20,7 @@ class GameManager {
     this.selectedCards = [[], [], [], []];
     this.gamePhase = GamePhases.Trading;
     this.lastPlayedCard = new Card_Class(0, "Clubs", 100);
+    this.turn = 1;
     this.round = 1;
     this.startingCardPosition = [];
     this.startingPlayer = GamePhases.FirstTurn;
@@ -77,11 +79,11 @@ class GameManager {
     return this.lastPlayedCard;
   }
 
-  //Functino to be executed for each player's turn
+  //Function to be executed for each player's turn
   handleTurns(): void {
-    console.log(this.round);
+    console.log(this.turn);
     //To be executed on the first turn (i.e. play the 2 of Clubs automatically)
-    if (this.round === 1) {
+    if (this.turn === 1) {
       const i = this.startingCardPosition[0];
       const j = this.startingCardPosition[1];
       //Set gamePhase to player holding 2 of Clubs and set it to this.lastPlayedCard
@@ -124,7 +126,7 @@ class GameManager {
     }
     //Advance gamePhase to next player in line
     this.nextPlayerTurn();
-    this.round++;
+    this.turn++;
     console.log(this.gamePhase);
   }
 
