@@ -79,14 +79,15 @@ class GameManager {
     return this.lastPlayedCard;
   }
 
-  //Function to be executed for each player's turn
+  //To execute for each player's turn
   handleTurns(): void {
     console.log(this.turn);
-    //To be executed on the first turn (i.e. play the 2 of Clubs automatically)
+    //To execute on first turn (i.e. play the 2 of Clubs automatically)
     if (this.turn === 1) {
       const i = this.startingCardPosition[0];
       const j = this.startingCardPosition[1];
-      //Set gamePhase to player holding 2 of Clubs and set it to this.lastPlayedCard
+      //Set gamePhase to player holding 2 of Clubs
+      //Set 2 Of clubs to this.lastPlayedCard
       switch (this.startingPlayer) {
         case GamePhases.Player1:
           this.gamePhase = GamePhases.Player1;
@@ -105,7 +106,7 @@ class GameManager {
           this.setLastPlayedCard(4, this.allHands[i][j]);
           break;
       }
-      //To be executed every turn after the first
+      //To execute every turn after the first
     } else {
       //Set this.lastPlayedCard to selected card based on player turn
       switch (this.gamePhase) {
@@ -130,7 +131,7 @@ class GameManager {
     console.log(this.gamePhase);
   }
 
-  //Function to send 3 selected cards from each player in trading phase
+  //Send 3 selected cards from each CPU in trading phase
   tradeCards(): void {
     this.generateSelectedCardsForTrading();
 
@@ -149,7 +150,7 @@ class GameManager {
     this.resetSelectedCards();
   }
 
-  //Function to add 3 cards to each cpu player's this.selectedCards[] for trading
+  //Add 3 cards to each CPU's this.selectedCards[] for trading
   generateSelectedCardsForTrading(): void {
     for (let i = 1; i <= 3; i++) {
       for (let j = 0; j < 3; j++) {
@@ -158,9 +159,14 @@ class GameManager {
     }
   }
 
-  // selectCardCPU(): Card_Class {}
+  //Select card to play for CPU
+  chooseCardCPU(player: number): Card_Class {
+    return this.allHands[player - 1][0];
+  }
 
-  //Find which player has 2 of Clubs, set to this.startingPlayer, and store position of 2 of Clubs
+  //Find which player has 2 of Clubs
+  //Set to this.startingPlayer
+  //Store position of 2 of Clubs
   findStartingPlayer(): void {
     this.setGamePhase(GamePhases.FirstTurn);
     for (let i = 0; i < 4; i++) {
@@ -199,7 +205,7 @@ class GameManager {
     return this.startingPlayer;
   }
 
-  //Function to advance this.gamePhase to next player in line
+  //Advance this.gamePhase to next player in line
   nextPlayerTurn(): void {
     switch (this.gamePhase) {
       case GamePhases.Player1:
