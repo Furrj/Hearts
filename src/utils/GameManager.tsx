@@ -69,12 +69,6 @@ class GameManager {
     this.selectedCards = [[], [], [], []];
   }
 
-  //Next 2 functions handle this.lastPlayedCard
-  setLastPlayedCard(player: number, card: Card_Class): void {
-    this.removePlayerCard(player, card);
-    this.lastPlayedCard = card;
-  }
-
   getLastPlayedCard(): Card_Class {
     return this.lastPlayedCard;
   }
@@ -91,44 +85,54 @@ class GameManager {
       switch (this.startingPlayer) {
         case GamePhases.Player1:
           this.gamePhase = GamePhases.Player1;
-          this.setLastPlayedCard(1, this.allHands[i][j]);
+          this.playCard(1, this.allHands[i][j]);
           break;
         case GamePhases.Player2:
           this.gamePhase = GamePhases.Player2;
-          this.setLastPlayedCard(2, this.allHands[i][j]);
+          this.playCard(2, this.allHands[i][j]);
           break;
         case GamePhases.Player3:
           this.gamePhase = GamePhases.Player3;
-          this.setLastPlayedCard(3, this.allHands[i][j]);
+          this.playCard(3, this.allHands[i][j]);
           break;
         case GamePhases.Player4:
           this.gamePhase = GamePhases.Player4;
-          this.setLastPlayedCard(4, this.allHands[i][j]);
+          this.playCard(4, this.allHands[i][j]);
           break;
       }
       //To execute every turn after the first
     } else {
-      //Set this.lastPlayedCard to selected card based on player turn
-      switch (this.gamePhase) {
-        case GamePhases.Player1:
-          this.setLastPlayedCard(1, this.getSelectedCards(1)[0]);
-          this.resetSelectedCards();
-          break;
-        case GamePhases.Player2:
-          this.setLastPlayedCard(2, this.allHands[1][0]);
-          break;
-        case GamePhases.Player3:
-          this.setLastPlayedCard(3, this.allHands[2][0]);
-          break;
-        case GamePhases.Player4:
-          this.setLastPlayedCard(4, this.allHands[3][0]);
-          break;
-      }
+      this.playerTurn();
     }
     //Advance gamePhase to next player in line
     this.nextPlayerTurn();
     this.turn++;
     console.log(this.gamePhase);
+  }
+
+  //Remove card from player's hand and set to this.lastPlayedCard
+  playerTurn(): void {
+    switch (this.gamePhase) {
+      case GamePhases.Player1:
+        this.playCard(1, this.getSelectedCards(1)[0]);
+        this.resetSelectedCards();
+        break;
+      case GamePhases.Player2:
+        this.playCard(2, this.chooseCardCPU(2));
+        break;
+      case GamePhases.Player3:
+        this.playCard(3, this.chooseCardCPU(3));
+        break;
+      case GamePhases.Player4:
+        this.playCard(4, this.chooseCardCPU(4));
+        break;
+    }
+  }
+
+  //Remove card from player's hand and set to this.lastPlayedCard
+  playCard(player: number, card: Card_Class): void {
+    this.removePlayerCard(player, card);
+    this.lastPlayedCard = card;
   }
 
   //Send 3 selected cards from each CPU in trading phase
