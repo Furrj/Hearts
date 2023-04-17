@@ -94,18 +94,14 @@ const App: React.FC = () => {
     <div className="app">
       <div id="pbox4">
         <div className="pboxY">{player4Hand}</div>
-        <p>Player 4</p>
       </div>
       <div id="pbox3">
         <div className="pboxX">{player3Hand}</div>
-        <p>Player 3</p>
       </div>
       <div id="pbox2">
         <div className="pboxY">{player2Hand}</div>
-        <p>Player 2</p>
       </div>
       <div id="pbox1">
-        <p>Player 1</p>
         <div className="pboxX">{player1Hand}</div>
       </div>
       <CenterBox
