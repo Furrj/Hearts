@@ -73,6 +73,9 @@ const App: React.FC = () => {
       if (gameManager.getGamePhase() === GamePhases.Player1) {
         run = false;
       }
+      if (gameManager.getTurn() % 4 === 1 && gameManager.getTurn() !== 1) {
+        run = false;
+      }
     }
   }
 
