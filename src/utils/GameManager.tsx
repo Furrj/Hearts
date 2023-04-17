@@ -40,9 +40,9 @@ class GameManager {
     this.allHands[player - 1].push(card);
   }
 
-  removePlayerCard(player: number, cardId: number): void {
+  removePlayerCard(player: number, cardToRemove: Card_Class): void {
     this.allHands[player - 1] = this.allHands[player - 1].filter(
-      (card) => card.id !== cardId
+      (card) => card.id !== cardToRemove.id
     );
   }
 
@@ -71,7 +71,7 @@ class GameManager {
 
   //Next 2 functions for handling this.lastPlayedCard
   setLastPlayedCard(player: number, card: Card_Class): void {
-    this.removePlayerCard(player, card.id);
+    this.removePlayerCard(player, card);
     this.lastPlayedCard = card;
   }
 
@@ -132,31 +132,33 @@ class GameManager {
 
   //Function to send 3 selected cards from each player in trading phase
   tradeCards(): void {
-    this.generateSelectedCards();
+    this.generateSelectedCardsForTrading();
 
     //Add each player's selectedCards to next player's hand, then remove from their hand
     for (let i = 0; i <= 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (i < 3) {
           this.addPlayerCard(i + 2, this.selectedCards[i][j]);
-          this.removePlayerCard(i + 1, this.selectedCards[i][j].id);
+          this.removePlayerCard(i + 1, this.selectedCards[i][j]);
         } else {
           this.addPlayerCard(1, this.selectedCards[i][j]);
-          this.removePlayerCard(4, this.selectedCards[i][j].id);
+          this.removePlayerCard(4, this.selectedCards[i][j]);
         }
       }
     }
     this.resetSelectedCards();
   }
 
-  //Function to add 3 cards to each cpu player's this.selectedCards[]
-  generateSelectedCards(): void {
+  //Function to add 3 cards to each cpu player's this.selectedCards[] for trading
+  generateSelectedCardsForTrading(): void {
     for (let i = 1; i <= 3; i++) {
       for (let j = 0; j < 3; j++) {
         this.selectedCards[i].push(this.allHands[i][j]);
       }
     }
   }
+
+  // selectCardCPU(): Card_Class {}
 
   //Find which player has 2 of Clubs, set to this.startingPlayer, and store position of 2 of Clubs
   findStartingPlayer(): void {
