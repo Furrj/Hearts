@@ -35,7 +35,7 @@ class GameManager {
     return this.allHands;
   }
 
-  //Next 3 functions for handling each player's hand with this.allHands[]
+  //Next 3 functions handle each player's hand with this.allHands[]
   addPlayerCard(player: number, card: Card_Class): void {
     this.allHands[player - 1].push(card);
   }
@@ -50,7 +50,7 @@ class GameManager {
     return this.allHands[player - 1];
   }
 
-  //Next 4 functions for handling each player's selected cards with this.selectedCards[]
+  //Next 4 functions handle each player's selected cards with this.selectedCards[]
   addSelectedCard(player: number, card: Card_Class): void {
     this.selectedCards[player - 1].push(card);
   }
@@ -69,7 +69,7 @@ class GameManager {
     this.selectedCards = [[], [], [], []];
   }
 
-  //Next 2 functions for handling this.lastPlayedCard
+  //Next 2 functions handle this.lastPlayedCard
   setLastPlayedCard(player: number, card: Card_Class): void {
     this.removePlayerCard(player, card);
     this.lastPlayedCard = card;
@@ -199,7 +199,7 @@ class GameManager {
     return this.startingPlayer;
   }
 
-  //Function to change this.gamePhase to next player in line
+  //Function to advance this.gamePhase to next player in line
   nextPlayerTurn(): void {
     switch (this.gamePhase) {
       case GamePhases.Player1:
@@ -217,7 +217,7 @@ class GameManager {
     }
   }
 
-  //Next 2 functions for handling this.gamePhase
+  //Next 2 functions handle this.gamePhase
   getGamePhase(): GamePhases {
     return this.gamePhase;
   }
@@ -227,7 +227,7 @@ class GameManager {
   }
 }
 
-//Enum to keep track of possible GamePhases
+//Enum of possible GamePhases
 export enum GamePhases {
   Trading = "trading",
   FirstTurn = "firstTurn",
