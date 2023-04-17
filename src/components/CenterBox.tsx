@@ -39,7 +39,7 @@ const CenterBox: React.FC<IProps> = ({
     case GamePhases.FirstTurn:
       message =
         gameManager.getStartingPlayer() === GamePhases.Player1
-          ? "You have the 2 of Clubs, press select to start game"
+          ? "You have the 2 of Clubs"
           : `${gameManager.getStartingPlayer()} has the 2 of Clubs`;
       break;
   }
@@ -49,18 +49,21 @@ const CenterBox: React.FC<IProps> = ({
 
   //FUNCTIONS
   function executeTurn(): void {
-    if (gameManager.getGamePhase() === GamePhases.Trading) {
-      gameManager.tradeCards();
-      gameManager.findStartingPlayer();
-      gameManager.resetSelectedCards();
-      setValidSelect(false);
-      updateCards();
-      mainLoop();
-    } else if (gameManager.getGamePhase() === GamePhases.Player1) {
-      gameManager.handleTurns();
-      updateCards();
-      mainLoop();
-      setValidSelect(false);
+    switch (gameManager.getGamePhase()) {
+      case GamePhases.Trading:
+        gameManager.tradeCards();
+        gameManager.findStartingPlayer();
+        gameManager.resetSelectedCards();
+        setValidSelect(false);
+        updateCards();
+        mainLoop();
+        break;
+      case GamePhases.Player1:
+        gameManager.handleTurns();
+        updateCards();
+        mainLoop();
+        setValidSelect(false);
+        break;
     }
   }
 
