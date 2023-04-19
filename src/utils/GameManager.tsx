@@ -8,10 +8,11 @@ class GameManager {
   selectedCards: Card_Class[][];
   gamePhase: GamePhases;
   lastPlayedCard: Card_Class;
-  turn: number;
   startingCardPosition: number[];
   startingPlayer: GamePhases;
   round: number;
+  turn: number;
+  running: boolean;
 
   constructor() {
     this.instance = this;
@@ -24,6 +25,7 @@ class GameManager {
     this.round = 1;
     this.startingCardPosition = [];
     this.startingPlayer = GamePhases.FirstTurn;
+    this.running = false;
   }
 
   dealCards(): void {
@@ -71,6 +73,33 @@ class GameManager {
 
   getLastPlayedCard(): Card_Class {
     return this.lastPlayedCard;
+  }
+
+  cpuTurns(updateCards: () => void): void {
+    console.log("Running cpuTurns()");
+    if (this.gamePhase !== GamePhases.Player1) {
+      this.handleTurns();
+      updateCards();
+    }
+    if (this.gamePhase === GamePhases.Player1) {
+      this.running = false;
+    }
+    if (this.turn % 4 === 1 && this.turn !== 1) {
+      this.running = false;
+    }
+  }
+
+  mainLoop(
+    updateCards: () => void,
+    setGameStarted: (bool: boolean) => any
+  ): void {
+    const gameInterval: number = setInterval(() => {
+      if (!this.running) clearInterval(gameInterval);
+      else {
+        this.cpuTurns(updateCards);
+        setGameStarted(true);
+      }
+    }, 1000);
   }
 
   //To execute for each player's turn
@@ -142,6 +171,14 @@ class GameManager {
 
   getRound(): number {
     return this.round;
+  }
+
+  setRunning(runningState: boolean): void {
+    this.running = runningState;
+  }
+
+  getRunning(): boolean {
+    return this.running;
   }
 
   //Remove card from player's hand and set to this.lastPlayedCard

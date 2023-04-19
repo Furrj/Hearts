@@ -64,31 +64,31 @@ const App: React.FC = () => {
   }
 
   //Handle CPU turns
-  let run: boolean = true;
-  function cpuTurns(): void {
-    console.log("Running cpuTurns()");
-    if (gameManager.getGamePhase() !== GamePhases.Player1) {
-      gameManager.handleTurns();
-      updateCards();
-      if (gameManager.getGamePhase() === GamePhases.Player1) {
-        run = false;
-      }
-      if (gameManager.getTurn() % 4 === 1 && gameManager.getTurn() !== 1) {
-        run = false;
-      }
-    }
-  }
+  // let run: boolean = true;
+  // function cpuTurns(): void {
+  //   console.log("Running cpuTurns()");
+  //   if (gameManager.getGamePhase() !== GamePhases.Player1) {
+  //     gameManager.handleTurns();
+  //     updateCards();
+  //     if (gameManager.getGamePhase() === GamePhases.Player1) {
+  //       run = false;
+  //     }
+  //     if (gameManager.getTurn() % 4 === 1 && gameManager.getTurn() !== 1) {
+  //       run = false;
+  //     }
+  //   }
+  // }
 
   //Main game loop, ideally will be self-executing instead of triggered each turn
-  function mainLoop(): void {
-    const gameInterval: number = setInterval(() => {
-      if (!run) clearInterval(gameInterval);
-      else {
-        cpuTurns();
-        setGameStarted(true);
-      }
-    }, 1000);
-  }
+  // function mainLoop(): void {
+  //   const gameInterval: number = setInterval(() => {
+  //     if (!gameManager.getRunning()) clearInterval(gameInterval);
+  //     else {
+  //       gameManager.cpuTurns(updateCards);
+  //       setGameStarted(true);
+  //     }
+  //   }, 1000);
+  // }
 
   return (
     <div className="app">
@@ -111,8 +111,7 @@ const App: React.FC = () => {
         setValidSelect={setValidSelect}
         card={centerBoxCard}
         gameStarted={gameStarted}
-        cpuTurns={cpuTurns}
-        mainLoop={mainLoop}
+        setGameStarted={setGameStarted}
       />
     </div>
   );
